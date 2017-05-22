@@ -1,0 +1,72 @@
+import numpy as np
+
+from skimage import io
+from os import walk
+
+from sklearn.externals import joblib
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+
+# Compute integral image
+def int_img(im_array, width, height, channels):
+
+    int_image = np.zeros((width, height, channels))
+
+    # Initialize the corner pixel value
+    int_image[0, 0, 0] = im_array[0, 0, 0]
+    int_image[0, 0, 1] = im_array[0, 0, 1]
+    int_image[0, 0, 2] = im_array[0, 0, 2]
+    for x in range(1, width - 1):
+        for y in range(1, height - 1):
+            for c in range(channels):
+                int_image[x, y, c] = int(im_array[x - 1, y - 1, c]) + int(im_array[x - 1, y - 1, c]) + int(
+                                     im_array[x, y, c])
+
+    return int_image
+
+
+# List all filenames of directory
+dir_list = []
+for (dirpath, dirnames, filenames) in walk('datasets/acme_licenses'):
+    dir_list.extend(filenames)
+    break
+
+# Read all images from directory through the list of filenames
+im_list = []
+for file in dir_list :
+    img = io.imread('datasets/acme_licenses/' + file)
+    im_list.append(img)
+
+# Show first image from the list
+io.imshow(im_list[0])
+
+# Compute Haar-features
+haar_features = []
+for i in im_list :
+    # Retrieve image and story in array
+    img = im_list[i]
+    im_array = np.array(img)
+
+    width = img.shape[0]
+    height = img.shape[1]
+    channels = img.shape[2]
+
+    # Compute integral image
+    integral_image = int_img(im_array, width, height, channels)
+    for c in channels :
+        # D - A - B - C -> Not an actual feature yet, just the total value of the entire window
+        # TO DO: compute Haar-features, add labels
+        haar_features[i, c] = im_array(width, height, c) - im_array(0, height, c) - im_array(width, 0, c)
+
+# Untrained model
+bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+                         algorithm="SAMME",
+                         n_estimators=200)
+
+# Train model on training data
+# bdt.fit(X_train, y_train)
+
+# Save model for further use
+joblib.dump(bdt, r'C:\Users\Madelon\Documents\Madelon\1. TU Delft\CS\1. MSc 1'
+                 r'\Q4 Computer Vision\Project\ComputerVision\License plate detection/classifiers/vj_bdt')
