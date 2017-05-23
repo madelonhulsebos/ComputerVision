@@ -39,13 +39,16 @@ for file in dir_list :
     im_list.append(img)
 
 # Show first image from the list
-io.imshow(im_list[0])
+# io.imshow(im_list[0])
 
 # Compute Haar-features
-haar_features = []
-for i in im_list :
-    # Retrieve image and story in array
-    img = im_list[i]
+count = 0
+numimages = 10
+haar_feature1 = np.zeros((numimages, 3))
+haar_feature2 = np.zeros((numimages, 3))
+for i in im_list[0:numimages] :
+
+    img = i
     im_array = np.array(img)
 
     width = img.shape[0]
@@ -54,19 +57,28 @@ for i in im_list :
 
     # Compute integral image
     integral_image = int_img(im_array, width, height, channels)
-    for c in channels :
-        # D - A - B - C -> Not an actual feature yet, just the total value of the entire window
-        # TO DO: compute Haar-features, add labels
-        haar_features[i, c] = im_array(width, height, c) - im_array(0, height, c) - im_array(width, 0, c)
+    adj_height = height - 1
+    adj_width = width - 1
+
+    # Compute Haar-feature values for RGB color channels
+    for c in range(channels) :
+        lower_box = int(im_array[adj_width, adj_height, c]) - int(im_array[adj_width, int(height/2), c]) \
+                    - int(im_array[0, adj_height, c]) + int(im_array[0, int(height/2), c])
+        upper_box = int(im_array[adj_width, int(height/2), c])
+        haar_feature1[count, c] = upper_box - lower_box
+        haar_feature2[count, c] = lower_box - upper_box # This comes down to '- haar_feature1'
+
+    count = count + 1
+
 
 # Untrained model
-bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
-                         algorithm="SAMME",
-                         n_estimators=200)
+# bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
+#                         algorithm="SAMME",
+#                         n_estimators=200)
 
 # Train model on training data
 # bdt.fit(X_train, y_train)
 
 # Save model for further use
-joblib.dump(bdt, r'C:\Users\Madelon\Documents\Madelon\1. TU Delft\CS\1. MSc 1'
-                 r'\Q4 Computer Vision\Project\ComputerVision\License plate detection/classifiers/vj_bdt')
+# joblib.dump(bdt, r'C:\Users\Madelon\Documents\Madelon\1. TU Delft\CS\1. MSc 1'
+#                 r'\Q4 Computer Vision\Project\ComputerVision\License plate detection/classifiers/vj_bdt')
