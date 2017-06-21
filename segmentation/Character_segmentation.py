@@ -13,11 +13,6 @@ for (__, __, filename) in walk('../License plate detection/HOG/matches') :
     positive_images.extend(filename)
     break
 
-negative_images = []
-for (__, __, filename) in walk('../datasets/negative_instances') :
-    negative_images.extend(filename)
-    break
-
 for filename in positive_images[20:40] :
 
     img_original = cv2.imread('../License plate detection/HOG/matches/' + filename)
@@ -94,7 +89,14 @@ for filename in positive_images[20:40] :
             char_contours.append(contour)
             cv2.rectangle(img_lp, (intX, intY), (intX + intWidth, intY + intHeight), (0, 255, 0), 1)
 
-    print(len(char_contours))
+    if len(char_contours) == 7 :
+        i = 0
+        for contour in char_contours :
+            filename = str(i)
+            i = i + 1
+            x,y,w,h = cv2.boundingRect(contour)
+            char_img = img_lp[x-1:x+w+1,y-1:y+h+1]
+            cv2.imwrite("../segmentation/Segmented_chars/" + filename, char_img)
 
     cv2.drawContours(img_lp, char_contours, -1, (0, 255, 0), 1)
     cv2.imshow("License plate", img_lp)
