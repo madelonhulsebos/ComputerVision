@@ -24,5 +24,4 @@ for filename in images :
     characters = segment_characters(license_plate)
 
     if len(characters) == 7 :
-        counter = counter + 1
-        print('Detected 7 characters, totally fully segmented licenseplates = ', counter )
+        # call CNN to classify characters
