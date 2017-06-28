@@ -14,6 +14,7 @@ Once the system has classified each individual character we concatenated all the
 to get the desired output. Figure 1 shows the resulting pipeline of this system.
 
 ![System pipeline](./images/ComputerVision_System.jpg)
+
 *Figure 1: Overview of our system's pipeline*
 
 Each system component is written in Pyton, where we used several packages as listed in table 1.
