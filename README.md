@@ -17,11 +17,11 @@ to get the desired output. Figure 1 shows the resulting pipeline of this system.
 
 *Figure 1: Overview of our system's pipeline*
 
-### Instructions to execute systems
+### Instructions to execute system
 
 1. Clone this repository 
-2. Run the Main.py file
-3. Resulting classifications can be found in the _folder_ 
+2. Run the Main.py file (input images automatically imported)
+3. Resulting classifications can be found in the [folder] folder
 
 ### Overview of used packages and frameworks
 
