@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 # Match contours to license plate or character template
-def __check_contours__(boundaries, img_orig, img_preproc, license_plate_check) :
+def _check_contours(boundaries, img_orig, img_preproc, license_plate_check) :
 
     # Find all contours in the image
     (_, cntrs, _) = cv2.findContours(img_preproc.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -26,8 +26,10 @@ def __check_contours__(boundaries, img_orig, img_preproc, license_plate_check) :
         intX, intY, intWidth, intHeight = cv2.boundingRect(cntr)
 
         # Check if contour has proper sizes
+        x_cntr_list = []
         if intWidth > lower_width and intWidth < upper_width and intHeight > lower_height and intHeight < upper_height :
 
+            x_cntr_list.append(intX)
             target_contours.append(cntr)
 
             # If we check a license plate, crop the license plate
@@ -52,6 +54,9 @@ def __check_contours__(boundaries, img_orig, img_preproc, license_plate_check) :
                 char_copy[:, 22:24] = 0
 
                 img_res.append(char_copy)
+
+    #Return characters based on
+    [x_cntr_list for (x_cntr_list, target_contours, img_res) in sorted(zip(x_cntr_list, target_contours, img_res))]
 
     return target_contours, img_res
 
@@ -78,13 +83,13 @@ def segment_license_plate(image) :
 
 
     # Retrieve the probable cropped license plate
-    plate_contours, img_lp = __check_contours__(boundaries_lp, image, img_binary, True)
+    plate_contours, img_lp = _check_contours(boundaries_lp, image, img_binary, True)
 
     if len(plate_contours) == 0 :
         invert_img = np.invert(img_binary)
 
         # Check contour of inverted image if it's possibly a license plate
-        plate_contours, img_lp = __check_contours__(boundaries_lp, image, invert_img, True)
+        plate_contours, img_lp = _check_contours(boundaries_lp, image, invert_img, True)
 
 
     # If no license plate was found, return the biggest contour
@@ -126,28 +131,28 @@ def segment_characters(image) :
     boundaries_crop = [LP_WIDTH/6,
                        LP_WIDTH/3,
                        LP_HEIGHT/6,
-                       2*LP_HEIGHT/3];
+                       2*LP_HEIGHT/3]
 
     # Estimations of character contour sizes of non-cropped license plates
     boundaries_no_crop = [LP_WIDTH/12,
                           LP_WIDTH/6,
                           LP_HEIGHT/8,
-                          LP_HEIGHT/3];
+                          LP_HEIGHT/3]
 
     # Get contours within cropped license plate
-    char_contours, char_list = __check_contours__(boundaries_crop, img_binary_lp, img_binary_lp, False)
+    char_contours, char_list = _check_contours(boundaries_crop, img_binary_lp, img_binary_lp, False)
 
     if len(char_contours) != 7:
 
         # Check the smaller contours; possibly no plate was detected at all
-        char_contours, char_list = __check_contours__(boundaries_no_crop, img_binary_lp, img_binary_lp, False)
+        char_contours, char_list = _check_contours(boundaries_no_crop, img_binary_lp, img_binary_lp, False)
 
 
     if len(char_contours) == 0 :
 
             # If nothing was found, try inverting the image in case the background is darker than the foreground
             invert_img_lp = np.invert(img_binary_lp)
-            char_contours, char_list = __check_contours__(boundaries_crop, img_binary_lp, invert_img_lp, False)
+            char_contours, char_list = _check_contours(boundaries_crop, img_binary_lp, invert_img_lp, False)
 
     # If we found 7 chars, it is likely to form a license plate
     full_license_plate = []
