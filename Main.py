@@ -24,4 +24,5 @@ for filename in images :
     characters = segment_characters(license_plate)
 
     if len(characters) == 7 :
-        # call CNN to classify characters
+
+        print('call CNN to classify characters')
