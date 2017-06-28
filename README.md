@@ -13,7 +13,7 @@ and extracts it. To do so we implemented a variation of Dalal-Trigg's object det
 Once the system has classified each individual character we concatenated all the character labels
 to get the desired output. Figure 1 shows the resulting pipeline of this system.
 
-![System pipeline](./images/pipeline.jpg)
+![System pipeline](./images/ComputerVision_System.jpg)
 *Figure 1: Overview of our system's pipeline*
 
 Each system component is written in Pyton, where we used several packages as listed in table 1.
