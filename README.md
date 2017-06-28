@@ -5,7 +5,7 @@ an image as input, checks whether it contains a license plate, and
 if it does, identifies and classifies the characters from that license plate. 
 To achieve this, three main components are integrated:
 1. License plate detection: Identifies which part of the image, if any, depicts the license plate
-and extracts it. To do so we implemented a variation of Dalal-Trigg's object detector, using a non-linear SVM instead of a linear one. We used HOG features as our feature base.
+and extracts it. To do so we implemented a variation of Dalal-Trigg's object detector, using a non-linear SVM instead of a linear one and HOG features to represent the input images.
 2. Character segmentation: Identifies the individual characters in the detected segments. We first cropped each license plate segment to a license plate without background. The characters were extracted afterwards. Both subcomponents use contours of the objects in an image to identify whether it is a license plate or characters respectively.
 3. Optical character recognition: Classify each character segment to identify which character
 (A-Z, 0-9) is depicted. We implemented this component using a 3-layered Convolutional Neural Network.
