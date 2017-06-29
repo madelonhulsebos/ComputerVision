@@ -54,7 +54,7 @@ def _check_contours(boundaries, img_orig, img_preproc, license_plate_check) :
 
                 img_res.append(char_copy)
 
-    #Return characters based on
+    #Return characters on ascending order with respect to the x-coordinate (most-left character first)
     if license_plate_check is not True:
         indices = sorted(range(len(x_cntr_list)), key=lambda k: x_cntr_list[k])
         img_res_copy = []
