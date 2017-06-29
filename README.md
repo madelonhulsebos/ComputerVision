@@ -20,8 +20,10 @@ to get the desired output. Figure 1 shows the resulting pipeline of this system.
 ### Instructions to execute system
 
 1. Clone this repository 
-2. Run the Main.py file (input images automatically imported)
-3. Resulting classifications can be found in the root folder
+2. Run the `Main.py` file (input images automatically imported)
+3. Resulting classifications can be found in the `results.txt` file in the root (while running we also print progress updates in the console)
+
+In `results.txt`, each line contains the predicted text for the license plate in the corresponding image (i.e. the first line contains the prediction of image_0001.jpg). The images that we test on are located in the `datasets/cars_markus` directory. For the correct labels of each license plate in these images, please see the `labels.txt` file (which follows the same structure). Here we used "IRREGULAR" to denote a license plate that was in some way ill-suited for our classification task (because part of the plate was obscured, or because it contained highly irregular license plates such as "NEW CENTURY").
 
 ### Overview of used packages and frameworks
 
@@ -31,7 +33,7 @@ Each system component is written in Pyton, where we used several packages as lis
 | Commponent             | Package       | 
 | ---------------------- |:-------------:| 
 | General                |Scikit-learn, scikit-image, numpy |
-| Detection              | ... | 
+| Detection              | - | 
 | Segmentation           | OpenCV   | 
 | Charachter recognition | TensorFlow    | 
 
