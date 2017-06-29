@@ -1,6 +1,6 @@
-# ComputerVision
+# License Plate Recognition
 
-For our Computer Vision Project we have built a license plate recognizer. The system takes
+For our IN4393 Computer Vision project we have built a license plate recognizer. The system takes
 an image as input, checks whether it contains a license plate, and
 if it does, identifies and classifies the characters from that license plate. 
 To achieve this, three main components are integrated:
