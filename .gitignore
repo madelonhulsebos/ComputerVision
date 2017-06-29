@@ -1,3 +1,5 @@
 .idea/
 untracked_datasets/
-datasets/characters/noisy
+datasets/characters/noisy_train
+datasets/characters/noisy_test
+__pycache__

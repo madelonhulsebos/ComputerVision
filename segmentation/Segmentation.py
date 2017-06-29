@@ -19,14 +19,13 @@ def _check_contours(boundaries, img_orig, img_preproc, license_plate_check) :
     else :
         cntrs = sorted(cntrs, key=cv2.contourArea, reverse=True)[:15]
 
+    x_cntr_list = []
     target_contours = []
     img_res = []
     for cntr in cntrs :
 
         intX, intY, intWidth, intHeight = cv2.boundingRect(cntr)
-
         # Check if contour has proper sizes
-        x_cntr_list = []
         if intWidth > lower_width and intWidth < upper_width and intHeight > lower_height and intHeight < upper_height :
 
             x_cntr_list.append(intX)
@@ -56,7 +55,15 @@ def _check_contours(boundaries, img_orig, img_preproc, license_plate_check) :
                 img_res.append(char_copy)
 
     #Return characters based on
-    [x_cntr_list for (x_cntr_list, target_contours, img_res) in sorted(zip(x_cntr_list, target_contours, img_res))]
+    if license_plate_check is not True:
+        indices = sorted(range(len(x_cntr_list)), key=lambda k: x_cntr_list[k])
+        img_res_copy = []
+        target_contours_copy = []
+        for idx in indices:
+            img_res_copy.append(img_res[idx])
+            target_contours_copy.append(target_contours[idx])
+        img_res = img_res_copy
+        target_contours = target_contours_copy
 
     return target_contours, img_res
 

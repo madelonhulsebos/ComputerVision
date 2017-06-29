@@ -21,7 +21,7 @@ def detect_plate(image) :
 
     base_dir = 'detection/HOG/'
 
-    classifier = joblib.load(base_dir + 'detection_classifier')
+    classifier = joblib.load(base_dir + 'detection_classifier_linear')
     pca = joblib.load(base_dir + 'detection_pca')
 
     # Generate windows
@@ -40,7 +40,8 @@ def detect_plate(image) :
 
             # Apply Principal Component Analysis to window frame
             segment = image[y:y+size[0], x:x+size[1], :]
-            data = pca.transform(np.array([extract_hog(segment)]))
+            # data = pca.transform(np.array([extract_hog(segment)]))
+            data = np.array([extract_hog(segment)])
 
             if classifier.predict(data) == 1.0:
                 tmp = np.copy(image)
