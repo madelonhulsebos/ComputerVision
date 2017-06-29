@@ -27,10 +27,10 @@ In `results.txt`, each line contains the predicted text for the license plate in
 
 ### Overview of used packages and frameworks
 
-Each system component is written in Pyton, where we used several packages as listed in table 1.
+Each system component is written in Pyton, where we used several packages as listed in Table 1.
 
 
-| Commponent             | Package       | 
+| Component              | Package       | 
 | ---------------------- |:-------------:| 
 | General                |Scikit-learn, scikit-image, numpy |
 | Detection              | - | 
