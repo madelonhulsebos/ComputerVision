@@ -33,7 +33,7 @@ Each system component is written in Pyton, where we used several packages as lis
 | Component              | Package                          | Third-party algorithms used
 | ---------------------- |:--------------------------------:|:--------------------------------------------
 | General                |Scikit-learn, scikit-image, numpy | 
-| Detection              | -                                | We used skimage.feature.hog() to extract HOG features and sklearn.svm.SVC() for our SVM classifier. The remaining functionalities, such as the sliding window technique and the averaging of the positive matches, we did ourselves.
+| Detection              | -                                | We used `skimage.feature.hog()` to extract HOG features and `sklearn.svm.SVC()` for our SVM classifier. The remaining functionalities, such as the sliding window technique and the averaging of the positive matches, we did ourselves.
 | Segmentation           | OpenCV                           | We used the `cv2.findContours()` function to extract contours from the images. Some additional functions are used to preprocess the images. 
 | Charachter recognition | TensorFlow                       | We used Tensorflow's built-in functions as the building blocks to our CNN (e.g. by defining the individual layers, the optimization procedure and loss function). Other tasks such as fine-tuning the network, setting up the training and testing procedure, etc. were all things we implemented ourselves.
 
