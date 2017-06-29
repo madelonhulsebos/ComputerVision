@@ -30,7 +30,7 @@ Each system component is written in Pyton, where we used several packages as lis
 
 | Commponent             | Package       | 
 | ---------------------- |:-------------:| 
-| General                |Scikit-learn, scikit-image |
+| General                |Scikit-learn, scikit-image, numpy |
 | Detection              | ... | 
 | Segmentation           | OpenCV   | 
 | Charachter recognition | TensorFlow    | 
