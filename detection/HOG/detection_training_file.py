@@ -6,8 +6,8 @@ from skimage.color import rgb2gray
 from skimage.feature import hog
 from skimage.io import imread
 from skimage.transform import resize
-from sklearn.decomposition import PCA
 from sklearn.svm import SVC
+
 
 # Extract HOG features from images
 def extract_hog(img):
@@ -23,6 +23,7 @@ def extract_hog(img):
 positive_dir = '../../datasets/acme_licenses'
 negative_dir = '../../datasets/negative_instances'
 
+
 _, _, positive_images = next(walk(positive_dir))
 _, _, negative_images = next(walk(negative_dir))
 
@@ -33,17 +34,10 @@ X = np.concatenate((
 ))
 Y = np.concatenate((np.ones(len(positive_images)), np.zeros(len(negative_images))))
 
-# Apply PCA
-pca = PCA(n_components=.99)
-X = pca.fit_transform(X)
-
 # Train and fit classifier
-classifier = SVC()
+classifier = SVC(C=10**-2, kernel='linear')
 classifier.fit(X, Y)
 
 # Save trained models
-clsf_filename = 'detection/HOG/detection_classifier'
+clsf_filename = 'detection_classifier_linear'
 joblib.dump(classifier, clsf_filename)
-
-pca_filename = 'detection/HOG/detection_pca'
-joblib.dump(pca, pca_filename)
