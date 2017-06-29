@@ -31,8 +31,8 @@ Each system component is written in Pyton, where we used several packages as lis
 | Commponent             | Package       | 
 | ---------------------- |:-------------:| 
 | General                |Scikit-learn, scikit-image |
-| Detection              | HOG features  | 
-| Segmentation           | OpenCV 3.0.0  | 
+| Detection              | ... | 
+| Segmentation           | OpenCV   | 
 | Charachter recognition | TensorFlow    | 
 
 *Table 1: Overview of used packages and frameworks*
